@@ -8,7 +8,10 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      "http://localhost:3000",
+      "https://expense-tracker-client-delta.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -42,11 +45,9 @@ async function run() {
       try {
         // Input validation
         if (!req.body.title || req.body.title.length < 3) {
-          return res
-            .status(400)
-            .json({
-              error: "Title is required and must be at least 3 characters",
-            });
+          return res.status(400).json({
+            error: "Title is required and must be at least 3 characters",
+          });
         }
         if (!req.body.amount || isNaN(req.body.amount)) {
           return res
